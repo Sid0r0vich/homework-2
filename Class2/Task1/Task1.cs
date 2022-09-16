@@ -1,4 +1,7 @@
-﻿namespace Task1
+﻿using NUnit.Framework;
+using System.Collections.Specialized;
+
+namespace Task1
 {
     public class Task1
     {
@@ -9,7 +12,7 @@
  */
         internal static int StringLength(string s)
         {
-            throw new NotImplementedException();
+            return s.Length;
         }
 
 /*
@@ -21,9 +24,9 @@
             return new Tuple<int?, int?>(Code(First(s)), Code(Last(s)));
         }
         
-        private static char? First(string s) => throw new NotImplementedException(); 
-        private static char? Last(string s) => throw new NotImplementedException();
-        private static int? Code(char? c) => throw new NotImplementedException();
+        private static char? First(string s) => s[0];
+        private static char? Last(string s) => s[s.Length - 1];
+        private static int? Code(char? c) => (int)c;
        
 
 /*
@@ -32,7 +35,14 @@
  */
         internal static int CountDigits(string s)
         {
-            throw new NotImplementedException();
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (char.IsDigit(s[i])) 
+                    count++;
+            }
+
+            return count;
         }
 
 /*
@@ -42,32 +52,40 @@
  * и функцией Char.IsDigit:
  * https://docs.microsoft.com/ru-ru/dotnet/api/system.char.isdigit?view=net-6.0
  */
-        internal static int CountDigits2(string s)
-        {
-            throw new NotImplementedException();
-        }
+        internal static int CountDigits2(string s) => s.Count(ch => char.IsDigit(ch));
         
 /*
  * Задание 1.5. Дана строка, изображающая арифметическое выражение вида «<цифра>±<цифра>±…±<цифра>»,
  * где на месте знака операции «±» находится символ «+» или «−» (например, «4+7−2−8»). Вывести значение
  * данного выражения (целое число).
  */
-        internal static int CalcDigits(string expr) {
-            throw new NotImplementedException();
+        internal static int CalcDigits(string expr) 
+        {
+            int s = int.Parse(expr[0].ToString());
+            
+            for (int i = 1; i < expr.Length; i += 2)
+                s += int.Parse(expr.Substring(i,2));
+
+            return s;
         }
 
-/*
- * Задание 1.6. Даны строки S, S1 и S2. Заменить в строке S первое вхождение строки S1 на строку S2.
- */
-        internal static string ReplaceWithString(string s, string s1, string s2) {
-            throw new NotImplementedException();
+        /*
+         * Задание 1.6. Даны строки S, S1 и S2. Заменить в строке S первое вхождение строки S1 на строку S2.
+         */
+        internal static string ReplaceWithString(string s, string s1, string s2)
+        {
+            int ind = s.IndexOf(s1);
+            if (ind == -1) return s;
+            return s.Remove(ind, s1.Length).Insert(ind,s2);
         }
-        
 
         public static void Main(string[] args)
         {
-            throw new NotImplementedException(
-                "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях");
+            (int? a, int? b) = FirstLastCodes("qwerty");
+            //Console.WriteLine(CountDigits("65dg67"));
+            //Console.WriteLine(CountDigits2("567ye"));
+            Console.WriteLine(CalcDigits("7+7-4+9-8"));
+            Console.WriteLine(ReplaceWithString("Миру мир", "мир", "война"));
         }
     }
 }

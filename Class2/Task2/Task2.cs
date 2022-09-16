@@ -16,7 +16,9 @@ namespace Task2
  */
         internal static string FillWithAsterisks(string s, int n)
         {
-            throw new NotImplementedException();
+            string join = new string('*', n);
+
+            return string.Join(join,s.ToCharArray());
         }
 
 /*
@@ -34,13 +36,21 @@ namespace Task2
  */
         internal static string TabulateSquares(int n)
         {
-            throw new NotImplementedException();
+            int l = (n.ToString() + Math.Pow(n, 2).ToString()).Length + 1;
+            string res = "1" + new string(' ', l-2) + '1';
+
+            for (int i = 2; i <= n; i++)
+            {
+                res += "\n" + i.ToString() + Math.Pow(i, 2).ToString().PadLeft(l-i.ToString().Length);
+            }
+
+            return res;
         }
 
         public static void Main(string[] args)
         {
             Console.WriteLine(FillWithAsterisks("abc", 2));
-            Console.WriteLine(TabulateSquares(4));
+            Console.WriteLine(TabulateSquares(100));
         }
     }
 }
